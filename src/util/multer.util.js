@@ -11,10 +11,11 @@ module.exports = {
             "pdf",
             "docx",
             "glb",
+            "mp4",
         ];
 
         const fileFilter = (req, file, cb) => {
-            const maxSize = 2 * 1024 * 1024;
+            const maxSize = 5 * 1024 * 1024;
             let contentLength = parseInt(req.headers['content-length'])
 
             const extension = path

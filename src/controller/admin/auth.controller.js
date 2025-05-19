@@ -45,7 +45,7 @@ class AuthController {
     async refreshToken(req, res) {
         try {
             const token = req.cookies.refreshToken;
-            
+
             if (!token) {
                 return responseMsg.validationError(0, "Token not found")
             }
