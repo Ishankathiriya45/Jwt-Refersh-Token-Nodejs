@@ -1,3 +1,5 @@
+const crypto = require('node:crypto')
+
 const isEmpty = (value) => {
     if (value === undefined || value === null) return true;
 
@@ -21,4 +23,15 @@ module.exports = {
         return `${process.env["URL_" + process.env.RUN_MODE]}/public/uploads/${folderName}/${fileName}`;
         // return `https://${bucketName}.s3.${region}.amazonaws.com/${RUN_MODE.toLowerCase()}/${folderName}/${fileName}`;
     },
+
+    generateRandomCode: (prefix = null) => {
+        let randomCode = prefix
+            ? `${prefix}-${crypto.randomBytes(3).toString("hex")}`
+            : `${crypto.randomBytes(3).toString("hex")}`
+        return randomCode;
+    },
+
+    generateOtp: () => {
+        return Math.floor(1000 + Math.random() * 9000)
+    }
 }
