@@ -18,7 +18,7 @@ router.post('/create/:categoryId',
 )
 
 router.get('/list',
-    productAuth,
+    // productAuth,
     async (req, res) => {
         const result = await ProductCtr1.list(req, res)
         return res.status(result.status).send(result)

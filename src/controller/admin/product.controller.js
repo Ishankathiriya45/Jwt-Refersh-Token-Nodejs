@@ -1,13 +1,15 @@
 const { responseMsg } = require("../../responses");
 const { uploadImg } = require('../../helper/common');
 const FileService = require("../../service/file.service");
-const { db: { Product }, sequelize } = require("../../models");
+const { db: { Product, ProductImages }, sequelize } = require("../../models");
 const { where } = require("sequelize");
-const { isEmpty, generateFileName } = require("../../util/common.util");
+const { isEmpty, generateFileName, getFilterCluse } = require("../../util/common.util");
+const ProductService = require("../../service/data/product.service");
 
 class ProductController {
     constructor() {
         this.fileService = new FileService()
+        this.productService = new ProductService()
     }
 
     async create(req) {
@@ -53,7 +55,36 @@ class ProductController {
 
     async list(req) {
         try {
-            const detail = await Product.findAll()
+            const { page, limit, paginate = true, search } = req.query;
+
+            let options = {
+                // include: [
+                //     {
+                //         model: ProductImages,
+                //         as: "product_images",
+                //     },
+                // ],
+                order: [["createdAt", "asc"]],
+                distinct: true,
+            }
+
+            if (!search) {
+                options.where = {
+                    ...options.where,
+                    ...getFilterCluse({
+                        fields: ['name'],
+                        search,
+                    })
+                }
+            }
+
+            if (paginate) {
+                options.page = page;
+                options.limit = limit;
+                options.paginate = paginate;
+            }
+
+            const detail = await this.productService.findAll(options)
 
             if (detail) {
                 return responseMsg.successCode(1, "Success", detail)
