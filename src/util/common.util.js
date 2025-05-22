@@ -80,6 +80,14 @@ module.exports = {
             : {}
     },
 
+    generateRoomName: (data, isPrivate) => {
+        if (isPrivate) {
+            const sortedIds = [data.user1, data.user2].sort();
+            const roomName = `private_${sortedIds[0]}_${sortedIds[1]}`;
+            return roomName;
+        }
+    },
+
     capitalize: (str) =>
         str
             ? str.charAt(0).toUpperCase().trim() + str.slice(1).toUpperCase().trim()

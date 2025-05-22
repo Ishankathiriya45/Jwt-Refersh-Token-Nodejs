@@ -4,6 +4,7 @@ const db = require('./models')
 const path = require('path')
 const clc = require('cli-color')
 const cookieParser = require('cookie-parser')
+const { generateRoomName } = require('./util/common.util')
 const app = express()
 
 app.use(cookieParser())
