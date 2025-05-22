@@ -2,7 +2,7 @@ const { responseMsg } = require("../../responses");
 const { uploadImg } = require('../../helper/common');
 const FileService = require("../../service/file.service");
 const { db: { Product, ProductImages }, sequelize } = require("../../models");
-const { where } = require("sequelize");
+const { where, Op } = require("sequelize");
 const { isEmpty, generateFileName, getFilterCluse } = require("../../util/common.util");
 const ProductService = require("../../service/data/product.service");
 
@@ -55,7 +55,7 @@ class ProductController {
 
     async list(req) {
         try {
-            const { page, limit, paginate = true, search } = req.query;
+            const { page, limit, paginate = false, search } = req.query;
 
             let options = {
                 // include: [
@@ -68,7 +68,7 @@ class ProductController {
                 distinct: true,
             }
 
-            if (!search) {
+            if (search) {
                 options.where = {
                     ...options.where,
                     ...getFilterCluse({

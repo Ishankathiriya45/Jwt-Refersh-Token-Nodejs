@@ -1,4 +1,5 @@
-const crypto = require('node:crypto')
+const crypto = require('node:crypto');
+const { Op } = require('sequelize');
 
 const isEmpty = (value) => {
     if (value === undefined || value === null) return true;
@@ -72,6 +73,16 @@ module.exports = {
 
     getFilterCluse: (filterData) => {
         const { fields, search } = filterData;
-        const first = search.trim().split(" ")
-    }
+        // let first = search.trim()
+        return fields.includes("name")
+            ?
+            { name: { [Op.like]: `%${search}%` } }
+            : {}
+    },
+
+    capitalize: (str) =>
+        str
+            ? str.charAt(0).toUpperCase().trim() + str.slice(1).toUpperCase().trim()
+            : str
+
 }
