@@ -20,7 +20,7 @@ class AuthController {
             let comparePass = password === getUser.password;
 
             if (!getUser && comparePass == false) {
-                return responseMsg.validationError(0, "User not found")
+                return res.status(500).send(responseMsg.validationError(0, "User not found"))
             }
 
             let tokenData = {

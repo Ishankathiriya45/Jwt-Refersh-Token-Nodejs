@@ -1,0 +1,186 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Mysql",
+    "description": "Mysql Api documentation",
+    "version": "3.1.0"
+  },
+  "host": "192.168.29.153:4091",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "requestTokenAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "requesttoken",
+      "description": "Enter valid request token."
+    },
+    "bearerTokenAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "description": "Enter valid authorization token. Like: Bearer Token"
+    },
+    "deviceName": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "devicename",
+      "description": "Enter valid authorization token. Like: Bearer Token"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/admin/product/create/{categoryId}": {
+      "post": {
+        "tags": [
+          "Admin | Product"
+        ],
+        "summary": "Add product",
+        "description": "",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "productImage",
+            "in": "formData",
+            "type": "file",
+            "description": "Product image file"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "type": "double"
+          },
+          {
+            "name": "rating",
+            "in": "formData",
+            "type": "int"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "requestTokenAuth": []
+          }
+        ]
+      }
+    },
+    "/admin/product/list": {
+      "get": {
+        "tags": [
+          "Admin | Product"
+        ],
+        "summary": "Get product details",
+        "description": "",
+        "parameters": [
+          {
+            "name": "productId"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "requestTokenAuth": [],
+            "bearerTokenAuth": []
+          }
+        ]
+      }
+    },
+    "/admin/product/update/{productId}": {
+      "put": {
+        "tags": [
+          "Admin | Product"
+        ],
+        "summary": "Update product",
+        "description": "",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "productImage",
+            "in": "formData",
+            "type": "file",
+            "description": "Product image file"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "type": "double"
+          },
+          {
+            "name": "rating",
+            "in": "formData",
+            "type": "int"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "requestTokenAuth": []
+          }
+        ]
+      }
+    },
+    "/admin/product/delete/{productId}": {
+      "delete": {
+        "tags": [
+          "Admin | Product"
+        ],
+        "summary": "Delete product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "type": "string",
+            "description": "Enter product id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "requestTokenAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "autoBody": true
+}

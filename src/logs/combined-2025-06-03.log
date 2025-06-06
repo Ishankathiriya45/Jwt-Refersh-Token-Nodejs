@@ -1,0 +1,12 @@
+{"level":"info","message":{"duration":"31ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"42ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"36ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"16ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"24ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"181ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"37ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"20ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"35ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"29ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"28ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"19ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}

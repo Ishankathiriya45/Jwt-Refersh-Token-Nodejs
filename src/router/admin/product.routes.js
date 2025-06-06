@@ -40,4 +40,11 @@ router.put('/update/:productId',
     }
 )
 
+router.get('/count',
+    async (req, res) => {
+        const result = await ProductCtr1.count(req, res)
+        return res.status(result.status).send(result)
+    }
+)
+
 module.exports = router;

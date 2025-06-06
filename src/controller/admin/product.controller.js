@@ -2,7 +2,7 @@ const { responseMsg } = require("../../responses");
 const { uploadImg } = require('../../helper/common');
 const FileService = require("../../service/file.service");
 const { db: { Product, ProductImages }, sequelize } = require("../../models");
-const { where, Op } = require("sequelize");
+const { where, Op, Sequelize } = require("sequelize");
 const { isEmpty, generateFileName, getFilterCluse } = require("../../util/common.util");
 const ProductService = require("../../service/data/product.service");
 
@@ -55,7 +55,7 @@ class ProductController {
 
     async list(req) {
         try {
-            const { page, limit, paginate = false, search } = req.query;
+            const { page, limit, paginate = true, search } = req.query;
 
             let options = {
                 // include: [
@@ -87,12 +87,14 @@ class ProductController {
             const detail = await this.productService.findAll(options)
 
             if (detail) {
+                // logger.customLogger.log("info", "Success list of product")
                 return responseMsg.successCode(1, "Success", detail)
             } else {
                 return responseMsg.validationError(0, "Product not found")
             }
         } catch (error) {
-            return responseMsg.serverError(0, "Something went wrong", error.message)
+            responseMsg.serverError(0, "Something went wrong", error.message)
+            // return logger.customLogger.log("error", "Error")
         }
 
     }
@@ -172,6 +174,30 @@ class ProductController {
         } catch (error) {
             return responseMsg.serverError(0, "Something went wrong", error.message)
         }
+    }
+
+    async count(req) {
+        const [results] = await sequelize.query(`
+            SELECT sum(price) AS product_count FROM product group by rating
+            
+            SELECT name,
+            sum(price) over (partition by category order by rating DESC) AS total_price
+            FROM product
+        `);
+
+        // let options = {
+        //     attributes: {
+        //         include: [[
+        //             Sequelize.literal(`
+        //                 SELECT COUNT(*) AS product_count FROM product
+        //                 `),"total_product",
+        //         ]]
+        //     }
+        // }
+
+        // let pro = await Product.findAll(options)
+
+        return responseMsg.successCode(1, "Success", results)
     }
 }
 

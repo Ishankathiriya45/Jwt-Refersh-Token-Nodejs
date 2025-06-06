@@ -4,22 +4,22 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const process = require('process');
-const { logger } = require('sequelize/lib/utils/logger');
 const clc = require('cli-color');
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require('../config/config')
 const db = {};
 
+const username = process.env[`DB_USERNAME_${process.env.RUN_MODE}`]
+const password = process.env[`DB_PASSWORD_${process.env.RUN_MODE}`]
+const database = process.env[`DB_NAME_${process.env.RUN_MODE}`]
+const hostname = process.env[`DB_HOSTNAME_${process.env.RUN_MODE}`]
+
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config, {
-    dialect: config.dialect,
-    logging: false,
-  });
-}
+sequelize = new Sequelize(database, username, password, {
+  host: hostname,
+  dialect: "mysql",
+  logging: false,
+})
 
 sequelize.authenticate().then(() => {
   console.log(clc.magenta(`Connection has been successfully`), clc.cyan.underline(`DB_NAME::${config.database}`))
