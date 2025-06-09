@@ -36,39 +36,45 @@ module.exports = {
         return Math.floor(1000 + Math.random() * 9000)
     },
 
-    fetchRecord: async (model, options = {}, paginate = false, unscoped = false) => {
-        let page = 1, limit = 10;
+    fetchRecords: async (
+        model,
+        options = {},
+        paginate = false,
+        unscoped = false,
+    ) => {
+        let currentPage = 1,
+            pageSize = 10;
         const queryMethod = unscoped ? model.unscoped() : model;
 
-        let rows = []
+        let rows = [];
         if (paginate == true) {
-            page = parseInt(options.page) || 1;
-            limit = parseInt(options.limit) || 10;
+            currentPage = parseInt(options.currentPage) || 1;
+            pageSize = parseInt(options.pageSize) || 10;
 
-            let offset = (page - 1) * limit;
-            options.limit = limit;
+            const offset = (currentPage - 1) * pageSize;
+            options.limit = pageSize;
             options.offset = offset;
-            // delete options.page
-            // delete options.limit
-            // delete options.paginate
-            rows = await queryMethod.findAll(options)
+            delete options.currentPage;
+            delete options.pageSize;
+            delete options.is_paginate;
+            rows = await queryMethod.findAll(options);
         } else {
-            return await queryMethod.findAll(options)
+            return await queryMethod.findAll(options);
         }
 
-        let count = await queryMethod.count(options)
-        let totalPages = Math.ceil(count / options.limit)
+        const count = await queryMethod.count(options);
+        const totalPages = Math.ceil(count / options.limit);
 
         return {
             totalItems: count,
             totalPages,
-            page,
-            hasPrevious: page > 1,
-            hasNext: page < totalPages,
-            previous: page > 1 ? page - 1 : null,
-            next: page < totalPages ? page + 1 : null,
+            currentPage,
+            hasPrevious: currentPage > 1,
+            hasNext: currentPage < totalPages,
+            previous: currentPage > 1 ? currentPage - 1 : null,
+            next: currentPage < totalPages ? currentPage + 1 : null,
             rows,
-        }
+        };
     },
 
     getFilterCluse: (filterData) => {

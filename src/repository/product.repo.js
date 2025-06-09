@@ -1,9 +1,9 @@
 const { db: { Product } } = require("../models");
-const { fetchRecord } = require("../util/common.util");
+const { fetchRecord, fetchRecords } = require("../util/common.util");
 
 class ProductRepo {
     findAll = async (options, unscoped = false) => {
-        return await fetchRecord(Product, options, options.paginate, unscoped)
+        return await fetchRecords(Product, options, options?.is_paginate, unscoped)
     }
 }
 

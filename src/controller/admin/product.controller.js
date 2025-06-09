@@ -3,7 +3,7 @@ const { uploadImg } = require('../../helper/common');
 const FileService = require("../../service/file.service");
 const { db: { Product, ProductImages }, sequelize } = require("../../models");
 const { where, Op, Sequelize } = require("sequelize");
-const { isEmpty, generateFileName, getFilterCluse } = require("../../util/common.util");
+const { isEmpty, generateFileName, getFilterCluse, getSearchClause, getSearch, getSearchCondition } = require("../../util/common.util");
 const ProductService = require("../../service/data/product.service");
 
 class ProductController {
@@ -55,7 +55,7 @@ class ProductController {
 
     async list(req) {
         try {
-            const { page, limit, paginate = true, search } = req.query;
+            const { currentPage, pageSize, isPaginate = false, search } = req.query;
 
             let options = {
                 // include: [
@@ -64,37 +64,35 @@ class ProductController {
                 //         as: "product_images",
                 //     },
                 // ],
-                order: [["createdAt", "asc"]],
-                distinct: true,
+                // order: [["createdAt", "asc"]],
+                // distinct: true,
             }
 
             if (search) {
                 options.where = {
                     ...options.where,
                     ...getFilterCluse({
-                        fields: ['name'],
+                        fields: ["name"],
                         search,
-                    })
-                }
+                    }),
+                };
             }
 
-            if (paginate) {
-                options.page = page;
-                options.limit = limit;
-                options.paginate = paginate;
+            if (isPaginate) {
+                options.currentPage = currentPage;
+                options.pageSize = pageSize;
+                options.is_paginate = isPaginate;
             }
 
             const detail = await this.productService.findAll(options)
 
             if (detail) {
-                // logger.customLogger.log("info", "Success list of product")
                 return responseMsg.successCode(1, "Success", detail)
             } else {
                 return responseMsg.validationError(0, "Product not found")
             }
         } catch (error) {
             responseMsg.serverError(0, "Something went wrong", error.message)
-            // return logger.customLogger.log("error", "Error")
         }
 
     }
