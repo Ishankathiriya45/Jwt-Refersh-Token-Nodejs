@@ -8,7 +8,7 @@ const doc = {
     description: "Mysql Api documentation",
   },
   host: hostName,
-  basePath: "/",  
+  basePath: "/",
   schemes: ["http", "https"],
   consumes: ["application/json"],
   produces: ["application/json"],
