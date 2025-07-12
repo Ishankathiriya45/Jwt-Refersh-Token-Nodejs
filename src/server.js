@@ -25,5 +25,5 @@ app.use("/api", require("./router"));
 
 const port = process.env.PORT;
 app.listen(port, () => {
-  console.log(`Server is running on port ${clc.green.underline(port)}`);
+  console.log(`Server is running on port ${clc.yellow.underline(port)}`);
 });

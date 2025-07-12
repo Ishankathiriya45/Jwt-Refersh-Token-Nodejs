@@ -1,9 +1,9 @@
-const productRepo = require("../../repository/product.repo")
+const { ProductRepository } = require("../../repository");
 
 class ProductService {
-    findAll = async (options = {}) => {
-        return await productRepo.findAll(options, true)
-    }
+  findAll = async (options = {}) => {
+    return await ProductRepository.findAll(options, true);
+  };
 }
 
-module.exports = ProductService
+module.exports = ProductService;

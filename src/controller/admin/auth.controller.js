@@ -1,9 +1,10 @@
-const { where } = require("sequelize");
 const {
   db: { User },
 } = require("../../models");
-const { responseMsg } = require("../../responses");
-const { jwtSign, jwtVerify } = require("../../util/jwt.util");
+const {
+  ApiResponse: { serverError, successCode, validationError },
+} = require("../../responses");
+const { jwtSign } = require("../../util/jwt.util");
 const { refreshSign, refreshVerify } = require("../../util/refresh.util");
 
 class AuthController {
@@ -22,9 +23,7 @@ class AuthController {
       let comparePass = password === getUser.password;
 
       if (!getUser && comparePass == false) {
-        return res
-          .status(500)
-          .send(responseMsg.validationError(0, "User not found"));
+        return res.status(500).send(validationError(0, "User not found"));
       }
 
       let tokenData = {
@@ -52,16 +51,14 @@ class AuthController {
           error: null,
         });
     } catch (error) {
-      return res
-        .status(500)
-        .send({
-          status: 500,
-          responseCode: 0,
-          success: false,
-          message: "Something went wrong",
-          data: null,
-          error: error.message,
-        });
+      return res.status(500).send({
+        status: 500,
+        responseCode: 0,
+        success: false,
+        message: "Something went wrong",
+        data: null,
+        error: error.message,
+      });
     }
   }
 
@@ -70,7 +67,7 @@ class AuthController {
       const token = req.cookies.refreshToken;
 
       if (!token) {
-        return responseMsg.validationError(0, "Token not found");
+        return validationError(0, "Token not found");
       }
 
       let decoded = refreshVerify(token);
@@ -88,9 +85,9 @@ class AuthController {
 
       let newToken = jwtSign(tokenData);
 
-      return responseMsg.successCode(1, "Success", newToken);
+      return successCode(1, "Success", newToken);
     } catch (error) {
-      return responseMsg.serverError(0, "Something went wrong", error.message);
+      return serverError(0, "Something went wrong", error.message);
     }
   }
 }

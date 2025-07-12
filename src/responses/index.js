@@ -1,3 +1,3 @@
 module.exports = {
-    responseMsg: require('./response')
-}
+  ApiResponse: require("./response"),
+};

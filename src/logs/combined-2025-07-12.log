@@ -1,0 +1,4 @@
+{"level":"info","message":{"duration":"91ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list?search=laptop"}}
+{"level":"info","message":{"duration":"14ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"36ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/product/list"}}
+{"level":"info","message":{"duration":"78ms","method":"GET","requestBody":{},"responseBody":{},"statusCode":200,"url":"/api/admin/productImages/list"}}
